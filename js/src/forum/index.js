@@ -1,6 +1,11 @@
 import app from 'flarum/app';
 import { extend, override } from 'flarum/extend'
+import UserControls from 'flarum/utils/UserControls'
+import listItems from 'flarum/helpers/listItems'
+import username from 'flarum/helpers/username'
+import UserCard from 'flarum/components/UserCard'
 import HeaderSecondary from 'flarum/components/HeaderSecondary'
+import Dropdown from 'flarum/components/Dropdown'
 import UserPage from 'flarum/components/UserPage'
 
 app.initializers.add('dvwzj-dev-anonymous', () => {
@@ -33,6 +38,48 @@ app.initializers.add('dvwzj-dev-anonymous', () => {
       items.remove('settings')
       items.remove('separator')
     }
+  })
+  override(UserCard.prototype, 'view', function(original) {
+    const user = this.props.user
+    const controls = UserControls.controls(user, this).toArray()
+    const color = user.color()
+    const badges = user.badges().toArray()
+
+    return (
+      <div className={'UserCard ' + (this.props.className || '')}
+        style={color ? {backgroundColor: color} : ''}>
+        <div className="darkenBackground">
+          <div className="container">
+            {controls.length ? Dropdown.component({
+              children: controls,
+              className: 'UserCard-controls App-primaryControl',
+              menuClassName: 'Dropdown-menu--right',
+              buttonClassName: this.props.controlsButtonClassName,
+              label: app.translator.trans('core.forum.user_controls.button'),
+              icon: 'fas fa-ellipsis-v'
+            }) : ''}
+
+            <div className="UserCard-profile">
+              <h2 className="UserCard-identity">
+                <a href={app.route.user(user)} config={m.route}>
+                  {username(user)}
+                </a>
+              </h2>
+
+              {badges.length ? (
+                <ul className="UserCard-badges badges">
+                  {listItems(badges)}
+                </ul>
+              ) : ''}
+
+              <ul className="UserCard-info">
+                {listItems(this.infoItems().toArray())}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   })
 })
 
