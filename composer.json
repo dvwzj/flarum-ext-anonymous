@@ -1,0 +1,38 @@
+{
+  "name": "dvwzj-dev/flarum-ext-anonymous",
+  "description": "Make Flarum anonymous",
+  "keywords": [
+    "flarum"
+  ],
+  "type": "flarum-extension",
+  "license": "MIT",
+  "require": {
+    "flarum/core": "^0.1.0-beta.8",
+    "jenssegers/agent": "^2.6"
+  },
+  "authors": [
+    {
+      "name": "dvwzj",
+      "email": "iguphai_@msn.com",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Dvwzj\\Anonymous\\": "src/"
+    }
+  },
+  "extra": {
+    "flarum-extension": {
+      "title": "Anonymous",
+      "icon": {
+        "name": "",
+        "backgroundColor": "",
+        "color": ""
+      }
+    },
+    "flagrow": {
+      "discuss": ""
+    }
+  }
+}
