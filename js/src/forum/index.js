@@ -3,10 +3,13 @@ import { extend, override } from 'flarum/extend'
 import UserControls from 'flarum/utils/UserControls'
 import listItems from 'flarum/helpers/listItems'
 import username from 'flarum/helpers/username'
+import avatar from 'flarum/helpers/avatar'
+import icon from 'flarum/helpers/icon'
 import UserCard from 'flarum/components/UserCard'
 import HeaderSecondary from 'flarum/components/HeaderSecondary'
 import Dropdown from 'flarum/components/Dropdown'
 import UserPage from 'flarum/components/UserPage'
+import LoadingIndicator from 'flarum/components/LoadingIndicator';
 
 app.initializers.add('dvwzj-dev-anonymous', () => {
   window.$anonymous = {
@@ -60,8 +63,11 @@ app.initializers.add('dvwzj-dev-anonymous', () => {
             }) : ''}
 
             <div className="UserCard-profile">
-              <h2 className="UserCard-identity">
+              <h2 class="UserCard-identity">
                 <a href={app.route.user(user)} config={m.route}>
+                  <div class="UserCard-avatar">
+                    {avatar(user)}
+                  </div>
                   {username(user)}
                 </a>
               </h2>
